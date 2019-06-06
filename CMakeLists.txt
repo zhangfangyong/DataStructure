@@ -3,4 +3,5 @@ project(DataStructure)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(DataStructure FibonacciSequence.cpp SequenceTable.cpp)
+add_executable(FS FibonacciSequence.cpp)
+add_executable(ST SequenceTable.cpp)

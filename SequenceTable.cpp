@@ -15,14 +15,17 @@ public:
     int locate(const double temp) const;   //搜索元素对应的序号
     bool insert(const int index, const double temp);   //插入新的元素
     bool del_content(const int index);   //删除相应序号对应的元素
+    void destroy();
 private:
-    double data[maxlen];    //数组实现顺序表
+    int *data;              //动态分配
+    //double data[maxlen];  //静态分配
     int count;              //元素个数
 };
 
 //具体函数实现
 SeqTable::SeqTable() {
     count = 0;
+    data = new int[maxlen];
 }
 
 int SeqTable::length() const {
@@ -41,14 +44,49 @@ int SeqTable::locate(const double temp) const {
     }
     return -1;
 }
-
 bool SeqTable::insert(const int index, const double temp) {
     if(count == maxlen) return false;  //顺序表满
     if(index < 1 || index > length()+1) return false; //插入位置错误
-    for(int i=count-1; i>index-1; i--){
+    for(int i=count-1; i>=index-1; i--){
         data[i+1] = data[i];      //依次向后移动，为插入数据的位置腾出空间
     }
     data[index-1] = temp;  //插入
     count++;
     return true;
+}
+
+bool SeqTable::del_content(const int index) {
+    if(length() == 0) return false;  //空表
+    if(index<1 || index>length()) return false;  //删除元素不存在
+    for(int i=index+1; i<length(); i++){
+        data[i-2] = data[i-1];            //依次向前移动
+    }
+    count--;
+    return true;
+}
+void SeqTable::destroy() {
+    for(int i=0; i<length(); i++){
+        data[i] = 0;
+    }
+    count = 0;
+}
+
+int main(){
+    SeqTable T;
+    for(int i=1; i<=100; i++){
+        T.insert(i,i);
+    }
+    double temp;
+   /* for(int i=1; i<=100; i++){
+        T.get_content(i,temp);
+        cout<<temp<<endl;
+    }*/
+    cout<<T.locate(35)<<endl;
+    T.del_content(34);
+    for(int i=1; i<=99; i++){
+        T.get_content(i,temp);
+        cout<<temp<<endl;
+    }
+    T.destroy();
+    cout<<T.length();
 }
