@@ -4,28 +4,29 @@
 #include <iostream>
 using namespace std;
 
- /**********çº¿æ€§è¡¨çš„é¡ºåºå­˜å‚¨å®ç°â€”â€”é¡ºåºè¡¨**********/
+ /**********ÏßĞÔ±íµÄË³Ğò´æ´¢ÊµÏÖ¡ª¡ªË³Ğò±í**********/
 #define maxlen 100
 
 class SeqTable{
 public:
-    SeqTable();    //åˆå§‹åŒ–å‡½æ•°
-    int length() const;  //è¿”å›é¡ºåºè¡¨é•¿åº¦,ä¸ä¿®æ”¹æˆå‘˜æ•°æ®ï¼Œç”¨const
-    bool get_content(const int index,double &temp) const;  //æŒ‰ç…§åºå·å–ç›¸åº”çš„å…ƒç´ 
-    int locate(const double temp) const;   //æœç´¢å…ƒç´ å¯¹åº”çš„åºå·
-    bool insert(const int index, const double temp);   //æ’å…¥æ–°çš„å…ƒç´ 
-    bool del_content(const int index);   //åˆ é™¤ç›¸åº”åºå·å¯¹åº”çš„å…ƒç´ 
+    SeqTable();    //³õÊ¼»¯º¯Êı
+    int length() const;  //·µ»ØË³Ğò±í³¤¶È,²»ĞŞ¸Ä³ÉÔ±Êı¾İ£¬ÓÃconst
+    bool get_content(const int index,double &temp) const;  //°´ÕÕĞòºÅÈ¡ÏàÓ¦µÄÔªËØ
+    int locate(const double temp) const;   //ËÑË÷ÔªËØ¶ÔÓ¦µÄĞòºÅ
+    bool insert(const int index, const double temp);   //²åÈëĞÂµÄÔªËØ
+    bool del_content(const int index);   //É¾³ıÏàÓ¦ĞòºÅ¶ÔÓ¦µÄÔªËØ
     void destroy();
 private:
-    int *data;              //åŠ¨æ€åˆ†é…
-    //double data[maxlen];  //é™æ€åˆ†é…
-    int count;              //å…ƒç´ ä¸ªæ•°
+    int *data;              //¶¯Ì¬·ÖÅä
+    //double data[maxlen];  //¾²Ì¬·ÖÅä
+    int count;              //ÔªËØ¸öÊı
+    int len;                //ÓÃÓÚ¶¯Ì¬Êı×é³õÊ¼»¯
 };
 
-//å…·ä½“å‡½æ•°å®ç°
+//¾ßÌåº¯ÊıÊµÏÖ
 SeqTable::SeqTable() {
     count = 0;
-    data = new int[maxlen];
+    data = new int[len];
 }
 
 int SeqTable::length() const {
@@ -34,6 +35,7 @@ int SeqTable::length() const {
 
 bool SeqTable::get_content(const int index, double &temp) const {
     if(index <= 0 || index > count) return false;
+    //cout<<"ÔËĞĞÁË"<<endl;
     temp = data[index-1];
     return true;
 }
@@ -45,29 +47,27 @@ int SeqTable::locate(const double temp) const {
     return -1;
 }
 bool SeqTable::insert(const int index, const double temp) {
-    if(count == maxlen) return false;  //é¡ºåºè¡¨æ»¡
-    if(index < 1 || index > length()+1) return false; //æ’å…¥ä½ç½®é”™è¯¯
+    if(count == maxlen) return false;  //Ë³Ğò±íÂú
+    if(index < 1 || index > length()+1) return false; //²åÈëÎ»ÖÃ´íÎó
     for(int i=count-1; i>=index-1; i--){
-        data[i+1] = data[i];      //ä¾æ¬¡å‘åç§»åŠ¨ï¼Œä¸ºæ’å…¥æ•°æ®çš„ä½ç½®è…¾å‡ºç©ºé—´
+        data[i+1] = data[i];      //ÒÀ´ÎÏòºóÒÆ¶¯£¬Îª²åÈëÊı¾İµÄÎ»ÖÃÌÚ³ö¿Õ¼ä
     }
-    data[index-1] = temp;  //æ’å…¥
+    data[index-1] = temp;  //²åÈë
     count++;
     return true;
 }
 
 bool SeqTable::del_content(const int index) {
-    if(length() == 0) return false;  //ç©ºè¡¨
-    if(index<1 || index>length()) return false;  //åˆ é™¤å…ƒç´ ä¸å­˜åœ¨
+    if(length() == 0) return false;  //¿Õ±í
+    if(index<1 || index>length()) return false;  //É¾³ıÔªËØ²»´æÔÚ
     for(int i=index+1; i<length(); i++){
-        data[i-2] = data[i-1];            //ä¾æ¬¡å‘å‰ç§»åŠ¨
+        data[i-2] = data[i-1];            //ÒÀ´ÎÏòÇ°ÒÆ¶¯
     }
     count--;
     return true;
 }
 void SeqTable::destroy() {
-    for(int i=0; i<length(); i++){
-        data[i] = 0;
-    }
+    delete data;
     count = 0;
 }
 
@@ -76,17 +76,19 @@ int main(){
     for(int i=1; i<=100; i++){
         T.insert(i,i);
     }
-    double temp;
+    double temp=4;
    /* for(int i=1; i<=100; i++){
         T.get_content(i,temp);
         cout<<temp<<endl;
-    }*/
+    }
     cout<<T.locate(35)<<endl;
-    T.del_content(34);
     for(int i=1; i<=99; i++){
         T.get_content(i,temp);
         cout<<temp<<endl;
-    }
+    }*/
     T.destroy();
-    cout<<T.length();
+    cout<<temp<<endl;
+    cout<<T.length()<<endl;
+    cout<<T.get_content(2,temp)<<endl;
+    cout<<temp;
 }

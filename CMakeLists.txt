@@ -5,3 +5,4 @@ set(CMAKE_CXX_STANDARD 14)
 
 add_executable(FS FibonacciSequence.cpp)
 add_executable(ST SequenceTable.cpp)
+add_executable(Test Test.cpp)
