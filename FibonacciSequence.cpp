@@ -5,7 +5,7 @@ using namespace std;
 
 //µİ¹éÇó½â
 int Recursive_FS(int input){
-    if(input == 0 or input == 1) return input;
+    if(input == 0 || input == 1) return 1;
     else return Recursive_FS(input -1) + Recursive_FS(input-2);
 }
 
@@ -23,7 +23,7 @@ int N_Recursive_FS(int input){
 
 int main() {
     int output,n_output;
-    int input = 40 ;
+    int input = 30 ;
     output = Recursive_FS(input);
     n_output = N_Recursive_FS(input);
     cout<<"µİ¹é´ğ°¸£º"<<output<<endl;
