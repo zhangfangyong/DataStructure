@@ -3,6 +3,7 @@ project(DataStructure)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(FS FibonacciSequence.cpp)
-add_executable(ST SequenceTable.cpp)
+add_subdirectory(Unit_1)
+add_subdirectory(Unit_2)
+
 add_executable(Test Test.cpp)

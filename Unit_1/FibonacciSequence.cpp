@@ -5,6 +5,7 @@ using namespace std;
 
 //递归求解
 int Recursive_FS(int input){
+    if(input < 0) return  0;
     if(input == 0 || input == 1) return 1;
     else return Recursive_FS(input -1) + Recursive_FS(input-2);
 }
@@ -12,8 +13,8 @@ int Recursive_FS(int input){
 //非递归求解
 int N_Recursive_FS(int input){
     int t1 = 1,t2 = 1,t3 = 0;
-    if(input <= 2) t3 = 1;
-    else for (int i = 3; i <= input; i++) {
+    if(input < 2) t3 = 1;
+    else for (int i = 2; i <= input; i++) {
             t3 = t1 + t2;
             t1 = t2;
             t2 = t3;
@@ -23,7 +24,7 @@ int N_Recursive_FS(int input){
 
 int main() {
     int output,n_output;
-    int input = 30 ;
+    int input = 2 ;
     output = Recursive_FS(input);
     n_output = N_Recursive_FS(input);
     cout<<"递归答案："<<output<<endl;
